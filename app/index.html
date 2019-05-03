@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>B9labs Toll Road Projects</title>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <script src="./app.js"></script>
+</head>
+<body>
+
+  <button class="tablink" onclick="App.openPage('Regulator', this, '#777')" id="defaultOpen">Regulator</button>
+  <button class="tablink" onclick="App.openPage('Operator', this, '#777')">Operator</button>
+  <button class="tablink" onclick="App.openPage('Vehicle', this, '#777')">Vehicle</button>
+  <button class="tablink" onclick="App.openPage('TollBooth', this, '#777')">Toll Booth</button>
+  <div id="Regulator" class="tabcontent">
+    <h3> Regulator Address <span class='js-regulatorAddress'></span></h2> <br/>
+    <h3> Regulator Balance <span class='js-regulatorBalance'></span></h2> <br/>
+    <h1>Set Vehicle Type </h1>
+    <br><label for="vehicleType-address">Vehicle Address:</label><input type="text" id="vehicleType-address" placeholder="e.g., 0x93e66d9baea28c17d9fc393b53e3fbdd76899dae"></input>
+    <br><label for="vehicleType-type">Type:</label><input type="text" id="vehicleType-type" placeholder="e.g., 1"></input>
+    <br><br><button id="send" onclick="App.setVehicleType()">Set Vehicle Type</button> <br/> <br/>
+
+    <h1>Create New Operator </h1>
+    <br><label for="newOperator-owner">Owner Address:</label><input type="text" id="newOperator-owner" placeholder="e.g., 0x93e66d9baea28c17d9fc393b53e3fbdd76899dae"></input>
+    <br><label for="newOperator-deposit">Deposit:</label><input type="text" id="newOperator-deposit" placeholder="e.g., 1"></input>
+    <br><br><button id="send" onclick="App.createNewOperator()">Create New Operator</button> <br/> <br/>
+  </div>
+  <div id="Operator" class="tabcontent">
+    <h3> Operator Address <span class='js-operatorAddress'></span></h2> <br/>
+    <h3> Operator Balance <span class='js-operatorBalance'></span></h2> <br/>
+    <h1>Add Tollbooth (Also will unpause if paused is true) </h1>
+    <br><label for="addTollbooth-contractAddress">Operator Address:</label><input type="text" id="addTollbooth-contractAddress" class="tollboothOperator-address" placeholder="e.g., 0x93e66d9baea28c17d9fc393b53e3fbdd76899dae"></input>
+    <br><label for="addTollbooth-address">Tollbooth Address:</label><input type="text" id="addTollbooth-address" placeholder="e.g., 0x93e66d9baea28c17d9fc393b53e3fbdd76899dae"></input>
+    <br><br><button id="send" onclick="App.addTollBooth()">Create Tollbooth</button> <br/> <br/>
+
+    <h1>Set Route Price </h1>
+    <br><label for="setRoutePrice-contractAddress">Operator Address:</label><input type="text" id="setRoutePrice-contractAddress" class="tollboothOperator-address" placeholder="e.g., 0x93e66d9baea28c17d9fc393b53e3fbdd76899dae"></input>
+    <br><label for="setRoutePrice-entryAddress">Entry Tollbooth Address:</label><input type="text" id="setRoutePrice-entryAddress" placeholder="e.g., 0x93e66d9baea28c17d9fc393b53e3fbdd76899dae"></input>
+    <br><label for="setRoutePrice-exitAddress">Exit Tollbooth Address:</label><input type="text" id="setRoutePrice-exitAddress" placeholder="e.g., 0x93e66d9baea28c17d9fc393b53e3fbdd76899dae"></input>
+    <br><label for="setRoutePrice-priceWeis">Price Weis:</label><input type="text" id="setRoutePrice-priceWeis" placeholder="e.g., 1"></input>
+    <br><br><button id="send" onclick="App.setRoutePrice()">Set Route Price</button> <br/> <br/>
+
+    <h1>Set Multiplier </h1>
+    <br><label for="setMultiplier-contractAddress">Operator Address:</label><input type="text" id="setMultiplier-contractAddress" class="tollboothOperator-address" placeholder="e.g., 0x93e66d9baea28c17d9fc393b53e3fbdd76899dae"></input>
+    <br><label for="setMultiplier-vehicleType">Vehicle Type:</label><input type="text" id="setMultiplier-vehicleType" placeholder="e.g., 1"></input>
+    <br><label for="setMultiplier-multiplier">Multiplier:</label><input type="text" id="setMultiplier-multiplier" placeholder="e.g., 2"></input>
+    <br><br><button id="send" onclick="App.setMultiplier()">Set Multiplier</button> <br/> <br/>
+  </div>
+
+  <div id="Vehicle" class="tabcontent">
+    <h3> Vehicle Address <span class='js-vehicleAddress'></span></h2> <br/>
+    <h3> Vehicle Balance <span id='balanceeth'></span></h2> <br/>
+    <h1>Enter Road </h1>
+    <br><label for="enterRoad-contractAddress">Operator Address:</label><input type="text" id="enterRoad-contractAddress" class="tollboothOperator-address" placeholder="e.g., 0x93e66d9baea28c17d9fc393b53e3fbdd76899dae"></input>
+    <br><label for="enterRoad-entryAddress">Entry Tollbooth Address:</label><input type="text" id="enterRoad-entryAddress" placeholder="e.g., 0x93e66d9baea28c17d9fc393b53e3fbdd76899dae"></input>
+    <br><label for="enterRoad-secretHashed">Secret Hashed:</label><input type="text" id="enterRoad-secretHashed" placeholder="e.g., 1572b593c53d839d80004aa4b8c51211864104f06ace9e22be9c4365b50655ea" value="1572b593c53d839d80004aa4b8c51211864104f06ace9e22be9c4365b50655ea"></input>
+    <br><br><button id="send" onclick="App.enterRoad()">Enter Road</button> <br/> <br/>
+
+    <br><br><button id="send" onclick="App.enterExitHistory()">See Enter/Exit History</button> <br/> <br/>
+    <div id='enterexithistory'>
+
+    </div>
+  </div>
+  <div id="TollBooth" class="tabcontent">
+    <h3> Toll Booth Address <span class='js-tollboothAddress'></span></h2> <br/>
+    <h3> Toll Booth Balance <span class='js-tollboothBalance'></span></h2> <br/>
+    <h1>Exit Road </h1>
+    <br><label for="exitRoad-contractAddress">Operator Address:</label><input type="text" id="exitRoad-contractAddress" class="tollboothOperator-address" placeholder="e.g., 0x93e66d9baea28c17d9fc393b53e3fbdd76899dae"></input>
+    <br><label for="exitRoad-secret">Secret:</label><input type="text" id="exitRoad-secret" placeholder="e.g., 0000000000000000000000000000000000000000000000000000000000000001"></input>
+    <br><br><button id="send" onclick="App.exitRoad()">Report Exit Road</button> <br/> <br/>
+
+    <div id="exitresponse">
+
+    </div>
+  </div>
+
+  <br><br>
+  <span id="status"></span>
+  <br>
+  <span class="hint"><strong>Hint:</strong> open the browser developer console to view any errors and warnings.</span> <br/>
+  <span class="hint"><strong>Select User Above and ensure correct ethereum account</strong> <br/>
+</body>
+</html>
